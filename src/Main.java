@@ -13,6 +13,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
+        int tipoServicio = 0;
+        String matricula ="";
 
         while (!salir) {
             System.out.println("\n--- GESTIÓN DE CITAS TALLER ---");
@@ -29,6 +31,12 @@ public class Main {
             }
             if (opcion == 1) {
                 registrarCita();
+            }
+            if (opcion == 2) {
+                GestorFechas.probarFormatoFecha(scanner);
+            }
+            if (opcion == 3) {
+                calcularCosteServicio(tipoServicio, matricula);
             }
         }
     }
@@ -51,13 +59,15 @@ public class Main {
             LocalDate fechaValida = LocalDate.parse(fecha, formato_fecha);
             // La fecha de compra del coche tiene que ser antes de mañana si o si, lo comprobamos también
             LocalDate fechaMañana = LocalDate.now().plusDays(1);
-            if (fechaValida.isBefore(fechaMañana)){
+            if (fechaValida.isBefore(fechaMañana)) {
                 System.out.println("La fecha es válida: " + fechaValida);
             }
 
         } catch (DateTimeParseException e) {
             System.out.println("Error: El formato de la fecha es incorrecto o la fecha no existe.");
         }
+    }
+
         class GestorFechas {
 
             // Constante con el patrón de formato español
@@ -122,7 +132,9 @@ public class Main {
                 System.out.println("Cita fijada para el: " + formatearFechaEspanol(fechaCita));
             }
         }
-        public static double calcularCosteServicio (int tipoServicio , String matricula ) {
+
+
+        public static double calcularCosteServicio(int tipoServicio , String matricula) {
             double precioBase ;
 
             switch ( tipoServicio ) {
@@ -174,7 +186,7 @@ public class Main {
             double descuento = precioBase * porcentajeDescuento ;
             double precioFinal = precioBase - descuento ;
 
-            return precioFinal ;
+            return precioFinal;
         }
 
 
@@ -197,5 +209,4 @@ public class Main {
             System.out.printf("El importe total a pagar es: %.2f ?\n", total);
         }
     }
-    }
-}
+
